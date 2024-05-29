@@ -1,0 +1,29 @@
+version: '3'
+services:
+  koala_db:
+    image: mysql:8.2.0
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: koala
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: koala@password
+    volumes:
+      - "$PWD/db_data:/mysql/var/lib"
+    networks:
+      koala_network:
+  koala_backend:
+    container_name: koala-backend
+    build:
+      context: .
+    image: koala-backend
+    ports:
+      - "8000:8000"
+    networks:
+      koala_network:
+    restart: always
+networks:
+  koala_network:

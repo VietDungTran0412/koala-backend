@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
+// Mapper to map the Dto object to MenuItem entity
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MenuMapper {
     MenuMapper INSTANCE = Mappers.getMapper(MenuMapper.class);

@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.util.List;
 
+// MenuItem entity
 @Entity
 @Table(name = "menu_item")
 @Data

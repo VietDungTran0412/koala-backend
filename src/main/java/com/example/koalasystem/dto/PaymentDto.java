@@ -8,5 +8,6 @@ import lombok.Data;
 public class PaymentDto {
     @NotNull
     private Double receivedAmount;
+    @NotNull
     private PaymentMethod paymentType;
 }

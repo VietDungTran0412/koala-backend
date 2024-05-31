@@ -4,6 +4,8 @@ import com.example.koalasystem.enums.NormalOrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
+
+/* NormalOrder entity derived from abstract Order */
 @Entity
 @jakarta.persistence.Table(name = "koala_normal_order")
 @Data

@@ -10,8 +10,10 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.function.Function;
 
+/* OrderFactory is responsible for initializing the Order */
 @Component
 public class OrderFactory {
+    /* Create normal order object */
     public NormalOrder createNormalOrder(CreateOrderDto dto, Function<CreateOrderDto, NormalOrder> mapper, Double totalPrice) {
         NormalOrder order =  mapper.apply(dto);
         order.setTime(new Date());

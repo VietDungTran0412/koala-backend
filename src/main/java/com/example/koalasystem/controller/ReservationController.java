@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/* ReservationController represents ReservationHandler in the UML design
+*  - Receives reservation relevant request from the client
+*   - Ask the reservation service to handle reservation logic
+*   - Validate the request using Spring Validator
+* */
 @RestController
 @RequestMapping("/reservation")
 @AllArgsConstructor
@@ -33,5 +38,13 @@ public class ReservationController {
         log.info("Retrieving reservations from koala");
         List<Reservation> res = reservationService.getAll();
         return RestResponseDto.builder().message("Retrieved new reservation").data(res).build();
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    RestResponseDto deleteReservation(@PathVariable Long id) {
+        log.info("Retrieving request to delete order with id: {}", id);
+        Reservation res = reservationService.deleteById(id);
+        return RestResponseDto.builder().data(res).message("Deleted").build();
     }
 }

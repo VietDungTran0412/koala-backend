@@ -18,6 +18,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/* Handles order relevant service */
 @Service
 @Slf4j
 public class OrderService {
@@ -31,7 +32,9 @@ public class OrderService {
         this.orderFactory = orderFactory;
     }
 
+    /* Calculate the total price of the order */
     private Double calculateTotalPrice(Iterable<Integer> ids, Iterable<MenuItem> sellItems) {
+//        Map the occurence of the item in the request
         Map<Integer, Integer> map = new HashMap<>();
         for(Integer id : ids) {
             if(map.containsKey(id)) {
@@ -40,14 +43,15 @@ public class OrderService {
                 map.put(id, 1);
             }
         }
+//        Calculate the total value
         Double res = 0D;
         for (MenuItem item : sellItems) {
-//            res = total
             res += map.get(item.getId()) * item.getPrice();
         }
         return res;
     }
 
+    /* Save the order from CreateOrderDto */
     @Transactional(rollbackFor = Exception.class)
     public void saveOrder(CreateOrderDto dto, Function<CreateOrderDto, NormalOrder> mapper) {
         log.info("Order Service start saving order into Koala system");
@@ -58,11 +62,13 @@ public class OrderService {
         normalOrderRepository.save(savedOrder);
     }
 
+    /* Save the normal order entity */
     @Transactional(rollbackFor = Exception.class)
     public Order save(NormalOrder order) {
         return normalOrderRepository.save(order);
     }
 
+    /* Find all order by status */
     public List<OrderDto> findAllByStatus(NormalOrderStatus status, Function<NormalOrder, OrderDto> mapper) {
         log.info("Order Service start receiving order with status {}", status.name());
         List<NormalOrder> orders = normalOrderRepository.findAllByOrderStatus(status);

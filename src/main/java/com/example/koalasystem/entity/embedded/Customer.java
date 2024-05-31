@@ -1,4 +1,4 @@
-package com.example.koalasystem.entity;
+package com.example.koalasystem.entity.embedded;
 
 import jakarta.persistence.*;
 import lombok.Data;

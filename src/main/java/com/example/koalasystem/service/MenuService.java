@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/* Handles Menu relevant business logic and perform CRUD operations */
 @Service
 @Slf4j
 public class MenuService {
@@ -23,6 +24,7 @@ public class MenuService {
         this.repository = repository;
     }
 
+    /* Create new menu item */
     @Transactional(rollbackFor = Exception.class)
     public List<MenuItemDto> create(MenuItemCollectionDto dto, Function<MenuItemDto, MenuItem> toEntity, Function<MenuItem, MenuItemDto> toDto) {
         List<MenuItem> menuItems = dto.getMenuItems().stream().map(toEntity).collect(Collectors.toList());
@@ -31,15 +33,19 @@ public class MenuService {
         return savedMenuItems.stream().map(toDto).collect(Collectors.toList());
     }
 
+    /* Retrieve all the menu item */
     public List<MenuItemDto> getAll(Function<MenuItem, MenuItemDto> toDto) {
         log.info("Retrieving menu from koala system");
         return repository.findAll().stream().map(toDto).collect(Collectors.toList());
     }
+
+    /* Find menu item by ids */
     public List<MenuItem> findByIds(Iterable<Integer> ids) {
         log.info("Retrieving menu item by list of ids");
         return repository.findAllById(ids);
     }
 
+    /* Delete menu item by id */
     @Transactional(rollbackFor = Exception.class)
     public void deleteItemById(Integer id) {
         Optional<MenuItem> menuItemWrapper = repository.findById(id);

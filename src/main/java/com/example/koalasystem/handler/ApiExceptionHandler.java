@@ -14,16 +14,27 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ApiExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public RestResponseDto handleUsernameNotFound(EntityNotFoundException ex) {
-        return RestResponseDto.builder().message("Username has not been found!").build();
+    public RestResponseDto handleEntityNotFound(EntityNotFoundException ex) {
+        return RestResponseDto.builder().message(ex.getMessage()).build();
     }
 
-    @ExceptionHandler({ MethodArgumentNotValidException.class, IllegalArgumentException.class, PaymentException.class})
+    @ExceptionHandler( MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public RestResponseDto handleUsernameNotFound(MethodArgumentNotValidException ex) {
+    public RestResponseDto handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         return RestResponseDto.builder().message(ex.getBody().getTitle() + ": " + ex.getBody().getDetail() ).build();
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public RestResponseDto handleIllegalArgument(IllegalArgumentException ex) {
+        return RestResponseDto.builder().message(ex.getMessage()).build();
+    }
+
+    @ExceptionHandler(PaymentException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public RestResponseDto handlePaymentException(PaymentException ex) {
+        return RestResponseDto.builder().message(ex.getMessage()).build();
+    }
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

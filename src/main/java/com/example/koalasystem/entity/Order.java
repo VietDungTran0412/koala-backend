@@ -1,5 +1,6 @@
 package com.example.koalasystem.entity;
 
+import com.example.koalasystem.entity.embedded.Customer;
 import com.example.koalasystem.enums.OrderType;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;

@@ -1,5 +1,6 @@
 package com.example.koalasystem.service;
 
+import com.example.koalasystem.dto.PaymentResponseDto;
 import com.example.koalasystem.entity.NormalOrder;
 import com.example.koalasystem.entity.Order;
 import com.example.koalasystem.entity.Payment;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 @Service
 public class PaymentService {
@@ -28,7 +30,7 @@ public class PaymentService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Payment processPayment(PaymentMethod paymentType, Double receivedAmount, Long orderId) {
+    public PaymentResponseDto processPayment(PaymentMethod paymentType, Double receivedAmount, Long orderId, Function<Payment, PaymentResponseDto> mapper) {
         PaymentStrategy strategy = paymentStrategies.get(paymentType);
         NormalOrder order = orderService.getNormalOrderById(orderId);
         if(order.getOrderStatus() == NormalOrderStatus.PAID) {
@@ -38,7 +40,7 @@ public class PaymentService {
             Payment payment = strategy.pay(receivedAmount, order);
             order.setOrderStatus(NormalOrderStatus.PAID);
             orderService.save(order);
-            return payment;
+            return mapper.apply(payment);
         } else {
             throw new IllegalArgumentException("Invalid payment type: " + paymentType);
         }

@@ -2,6 +2,7 @@ package com.example.koalasystem.dto;
 
 import com.example.koalasystem.enums.NormalOrderStatus;
 import com.example.koalasystem.enums.OrderType;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data

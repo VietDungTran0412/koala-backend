@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
+// ReservationMapper to map dto object to entity object and vice versa
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ReservationMapper {
     ReservationMapper INSTANCE = Mappers.getMapper(ReservationMapper.class);
